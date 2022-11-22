@@ -1,0 +1,5 @@
+{
+    "type": "runtime",
+    "alias": "local",
+    "entrypoint": "./scripts/run-vehicleservices.sh"
+}
