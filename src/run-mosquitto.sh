@@ -17,7 +17,7 @@ echo "#######################################################"
 echo "### Running Mosquitto                               ###"
 echo "#######################################################"
 
-ROOT_DIRECTORY=$( realpath "$( cd -- "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )/../../../.." )
+ROOT_DIRECTORY=$VELOCITAS_WORKSPACE_DIR
 
 # Get Data from AppManifest.json and save to ENV
 UTILS_DIRECTORY="$ROOT_DIRECTORY/.vscode/scripts/runtime/utils"

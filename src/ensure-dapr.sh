@@ -28,7 +28,7 @@ init_dapr()
       echo "=========================="
 }
 
-ROOT_DIRECTORY=$( realpath "$( cd -- "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )/../../../.." )
+ROOT_DIRECTORY=$VELOCITAS_WORKSPACE_DIR
 DEFAULT_DAPR_CLI_VERSION=$(cat $ROOT_DIRECTORY/app/AppManifest.json | jq .[].dependencies.dapr.cli.version | tr -d '"')
 DEFAULT_DAPR_RUNTIME_VERSION=$(cat $ROOT_DIRECTORY/app/AppManifest.json | jq .[].dependencies.dapr.runtime.version | tr -d '"')
 
