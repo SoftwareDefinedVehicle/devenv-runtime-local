@@ -1,5 +1,12 @@
 {
     "type": "runtime",
     "alias": "local",
-    "entrypoint": "./src/entrypoint.sh"
+    "entrypoint": "./src/entrypoint.sh",
+    "variables": [
+        {
+            "name": "myVar",
+            "type": "string",
+            "description": "some basic description"
+        }
+    ]
 }
