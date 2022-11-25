@@ -17,12 +17,6 @@ echo "#######################################################"
 echo "### Running VehicleServices                         ###"
 echo "#######################################################"
 
-ROOT_DIRECTORY=$VELOCITAS_WORKSPACE_DIR
-
-# Get Data from AppManifest.json and save to ENV
-UTILS_DIRECTORY="$ROOT_DIRECTORY/.vscode/scripts/runtime/utils"
-source $UTILS_DIRECTORY/get-appmanifest-data.sh
-
 # Configure Service Specific Requirements
 configure_service() {
     case $1 in
@@ -64,11 +58,11 @@ run_service() {
         --app-protocol grpc \
         --app-port $DAPR_APP_PORT \
         --dapr-grpc-port $DAPR_GRPC_PORT \
-        --components-path $ROOT_DIRECTORY/.dapr/components \
-        --config $ROOT_DIRECTORY/.dapr/config.yaml &
+        --components-path $VELOCITAS_WORKSPACE_DIR/.dapr/components \
+        --config $VELOCITAS_WORKSPACE_DIR/.dapr/config.yaml &
 }
 
-DEPENDENCIES=$(cat $ROOT_DIRECTORY/app/AppManifest.json | jq .[].dependencies)
+DEPENDENCIES=$(cat $VELOCITAS_WORKSPACE_DIR/app/AppManifest.json | jq .[].dependencies)
 SERVICES=$(echo $DEPENDENCIES | jq '.services')
 
 if [ "$SERVICES" = "null" ];then

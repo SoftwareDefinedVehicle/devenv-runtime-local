@@ -17,14 +17,13 @@ echo "#######################################################"
 echo "### Running FeederCan                               ###"
 echo "#######################################################"
 
-ROOT_DIRECTORY=$VELOCITAS_WORKSPACE_DIR
+### Override default files for feedercan
+CONFIG_DIR="$VELOCITAS_WORKSPACE_DIR/deploy/runtime/k3d/volume"
 
-# Get Data from AppManifest.json and save to ENV
-UTILS_DIRECTORY="$ROOT_DIRECTORY/.vscode/scripts/runtime/utils"
-source $UTILS_DIRECTORY/get-appmanifest-data.sh
+SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 
 ### Override default files for feedercan
-CONFIG_DIR="$ROOT_DIRECTORY/deploy/runtime/k3d/volume"
+CONFIG_DIR="$(dirname "$SCRIPT_DIR")/src/data"
 
 export VEHICLEDATABROKER_DAPR_APP_ID=vehicledatabroker
 export DAPR_GRPC_PORT=52001
@@ -57,5 +56,5 @@ docker run \
 dapr run \
     --app-id feedercan \
     --app-protocol grpc \
-    --components-path $ROOT_DIRECTORY/.dapr/components \
-    --config $ROOT_DIRECTORY/.dapr/config.yaml && fg
+    --components-path $VELOCITAS_WORKSPACE_DIR/.dapr/components \
+    --config $VELOCITAS_WORKSPACE_DIR/.dapr/config.yaml && fg

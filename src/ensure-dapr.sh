@@ -28,9 +28,8 @@ init_dapr()
       echo "=========================="
 }
 
-ROOT_DIRECTORY=$VELOCITAS_WORKSPACE_DIR
-DEFAULT_DAPR_CLI_VERSION=$(cat $ROOT_DIRECTORY/app/AppManifest.json | jq .[].dependencies.dapr.cli.version | tr -d '"')
-DEFAULT_DAPR_RUNTIME_VERSION=$(cat $ROOT_DIRECTORY/app/AppManifest.json | jq .[].dependencies.dapr.runtime.version | tr -d '"')
+DEFAULT_DAPR_CLI_VERSION=$(cat $VELOCITAS_WORKSPACE_DIR/app/AppManifest.json | jq .[].dependencies.dapr.cli.version | tr -d '"')
+DEFAULT_DAPR_RUNTIME_VERSION=$(cat $VELOCITAS_WORKSPACE_DIR/app/AppManifest.json | jq .[].dependencies.dapr.runtime.version | tr -d '"')
 
 INSTALLED_DAPR_CLI_VERSION=$(dapr --version | grep "CLI version: " | sed 's/^.*: //' | sed 's/\s*//g')
 INSTALLED_DAPR_RUNTIME_VERSION=$(dapr --version | grep "Runtime version: " | sed 's/^.*: //' | sed 's/\s*//g')

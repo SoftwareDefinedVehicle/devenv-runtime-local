@@ -17,12 +17,6 @@ echo "#######################################################"
 echo "### Running Databroker                              ###"
 echo "#######################################################"
 
-ROOT_DIRECTORY=$VELOCITAS_WORKSPACE_DIR
-
-# Get Data from AppManifest.json and save to ENV
-UTILS_DIRECTORY="$ROOT_DIRECTORY/.vscode/scripts/runtime/utils"
-source $UTILS_DIRECTORY/get-appmanifest-data.sh
-
 DATABROKER_PORT='55555'
 export DATABROKER_GRPC_PORT='52001'
 #export RUST_LOG="info,databroker=debug,vehicle_data_broker=debug"
@@ -46,5 +40,5 @@ dapr run \
     --app-protocol grpc \
     --app-port $DATABROKER_PORT \
     --dapr-grpc-port $DATABROKER_GRPC_PORT \
-    --components-path $ROOT_DIRECTORY/.dapr/components \
-    --config $ROOT_DIRECTORY/.dapr/config.yaml && fg
+    --components-path $VELOCITAS_WORKSPACE_DIR/.dapr/components \
+    --config $VELOCITAS_WORKSPACE_DIR/.dapr/config.yaml && fg

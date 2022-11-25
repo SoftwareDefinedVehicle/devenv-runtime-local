@@ -17,12 +17,6 @@ echo "#######################################################"
 echo "### Running Mosquitto                               ###"
 echo "#######################################################"
 
-ROOT_DIRECTORY=$VELOCITAS_WORKSPACE_DIR
-
-# Get Data from AppManifest.json and save to ENV
-UTILS_DIRECTORY="$ROOT_DIRECTORY/.vscode/scripts/runtime/utils"
-source $UTILS_DIRECTORY/get-appmanifest-data.sh
-
 #Terminate existing running services
 RUNNING_CONTAINER=$(docker ps | grep "$MOSQUITTO_IMAGE" | awk '{ print $1 }')
 
