@@ -13,7 +13,6 @@ else
         SERVICE_NAME=$(echo $service | jq '.name' | tr -d '"' )
         echo "Stopping Service: $SERVICE_NAME"
         dapr stop --app-id $SERVICE_NAME && docker rm -f local_$SERVICE_NAME
-        fi
     done
 fi
 
