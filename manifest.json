@@ -1,7 +1,8 @@
 {
     "type": "runtime",
     "alias": "local",
-    "entrypoint": "./src/entrypoint.sh",
+    "entrypoint": "./src/start.sh",
+    "termination": "./src/stop.sh",
     "variables": [
         {
             "name": "myVar",

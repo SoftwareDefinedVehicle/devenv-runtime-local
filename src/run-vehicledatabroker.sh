@@ -29,6 +29,7 @@ then
 fi
 
 docker run \
+    --name local_vehicledatabroker \
     -p $DATABROKER_PORT:$DATABROKER_PORT \
     -p $DATABROKER_GRPC_PORT:$DATABROKER_GRPC_PORT \
     -e DATABROKER_GRPC_PORT \

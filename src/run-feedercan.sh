@@ -42,6 +42,7 @@ then
 fi
 
 docker run \
+    --name local_feedercan \
     -v ${CONFIG_DIR}:/data \
     -e VEHICLEDATABROKER_DAPR_APP_ID \
     -e DAPR_GRPC_PORT \

@@ -51,7 +51,7 @@ run_service() {
         docker container stop $RUNNING_CONTAINER
     fi
 
-    docker run $DOCKER_PORTS $DOCKER_ENVS --network host $SERVICE_IMAGE:$SERVICE_TAG &
+    docker run --name local_$SERVICE_NAME $DOCKER_PORTS $DOCKER_ENVS --network host $SERVICE_IMAGE:$SERVICE_TAG &
 
     dapr run \
         --app-id $SERVICE_NAME \
