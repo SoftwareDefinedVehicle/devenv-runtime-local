@@ -1,13 +1,17 @@
 {
-    "type": "runtime",
     "alias": "local",
-    "entrypoint": "./src/start.sh",
-    "termination": "./src/stop.sh",
-    "variables": [
+    "components": [
         {
-            "name": "myVar",
-            "type": "string",
-            "description": "some basic description"
+            "type": "runtime",
+            "entrypoint": "./src/start.sh",
+            "termination": "./src/stop.sh",
+            "variables": [
+                {
+                    "name": "myVar",
+                    "type": "string",
+                    "description": "some basic description"
+                }
+            ]
         }
     ]
 }
