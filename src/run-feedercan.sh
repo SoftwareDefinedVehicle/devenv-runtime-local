@@ -17,9 +17,6 @@ echo "#######################################################"
 echo "### Running FeederCan                               ###"
 echo "#######################################################"
 
-### Override default files for feedercan
-CONFIG_DIR="$VELOCITAS_WORKSPACE_DIR/deploy/runtime/k3d/volume"
-
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 
 ### Override default files for feedercan
