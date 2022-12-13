@@ -1,0 +1,25 @@
+{
+    "databroker": {
+        "image": "ghcr.io/boschglobal/kuksa.val/databroker",
+        "version": "0.0.2"
+    },
+    "mqttBroker": {
+        "image": "eclipse-mosquitto",
+        "version": "2.0.14"
+    },
+    "services": [
+        {
+            "name": "seatservice",
+            "image": "ghcr.io/boschglobal/kuksa.val.services/seat_service",
+            "version": "v0.2.0"
+        }
+    ],
+    "dapr": {
+        "cli": {
+            "version": "1.9.1"
+        },
+        "runtime": {
+            "version": "1.8.1"
+        }
+    }
+}

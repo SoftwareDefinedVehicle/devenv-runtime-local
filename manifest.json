@@ -3,8 +3,39 @@
     "components": [
         {
             "type": "runtime",
-            "entrypoint": "./src/start.sh",
-            "termination": "./src/stop.sh",
+            "start": [
+                {
+                    "id": "ensure-dapr",
+                    "program": "./src/ensure-dapr.sh"
+                },
+                {
+                    "id": "run-mosquitto",
+                    "program": "./src/run-mosquitto.sh"
+                },
+                {
+                    "id": "run-vehicledatabroker",
+                    "program": "./src/run-vehicledatabroker.sh",
+                    "dependsOn": "ensure-dapr",
+                    "startupLine": "You're up and running! Dapr logs will appear here."
+                },
+                {
+                    "id": "run-feedercan",
+                    "program": "./src/run-feedercan.sh",
+                    "dependsOn": "run-vehicledatabroker"
+                },
+                {
+                    "id": "run-vehicleservices",
+                    "program": "./src/run-vehicleservices.sh",
+                    "dependsOn": "ensure-dapr"
+
+                }
+            ],
+            "stop": [
+                {
+                    "id": "stop-all",
+                    "program": "./src/stop.sh"
+                }
+            ],
             "variables": [
                 {
                     "name": "myVar",

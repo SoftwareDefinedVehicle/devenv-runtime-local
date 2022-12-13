@@ -14,14 +14,22 @@
 # SPDX-License-Identifier: Apache-2.0
 
 echo "#######################################################"
-echo "### Running Mosquitto                               ###"
+echo "### Running MQTT Broker                             ###"
 echo "#######################################################"
 
+SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+
+MQTTBROKER_IMAGE=$(cat $SCRIPT_DIR/config.json | jq .mqttBroker.image | tr -d '"')
+MQTTBROKER_TAG=$(cat $SCRIPT_DIR/config.json | jq .mqttBroker.version | tr -d '"')
+
 #Terminate existing running services
-RUNNING_CONTAINER=$(docker ps | grep "$MOSQUITTO_IMAGE" | awk '{ print $1 }')
+RUNNING_CONTAINER=$(docker ps | grep "$MQTTBROKER_IMAGE" | awk '{ print $1 }')
 
 if [ -n "$RUNNING_CONTAINER" ];
 then
     docker container stop $RUNNING_CONTAINER
 fi
-docker run --name local_mosquitto -p 1883:1883 -p 9001:9001 $MOSQUITTO_IMAGE:$MOSQUITTO_TAG mosquitto -c /mosquitto-no-auth.conf
+
+docker container rm local_mosquitto 2>/dev/null
+
+docker run --rm --name local_mosquitto -p 1883:1883 -p 9001:9001 $MQTTBROKER_IMAGE:$MQTTBROKER_TAG mosquitto -c /mosquitto-no-auth.conf

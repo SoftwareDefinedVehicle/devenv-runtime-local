@@ -17,6 +17,8 @@ echo "#######################################################"
 echo "### Running VehicleServices                         ###"
 echo "#######################################################"
 
+SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+
 # Configure Service Specific Requirements
 configure_service() {
     case $1 in
@@ -51,7 +53,9 @@ run_service() {
         docker container stop $RUNNING_CONTAINER
     fi
 
-    docker run --name local_$SERVICE_NAME $DOCKER_PORTS $DOCKER_ENVS --network host $SERVICE_IMAGE:$SERVICE_TAG &
+    docker container rm local_$SERVICE_NAME
+
+    docker run --rm --name local_$SERVICE_NAME $DOCKER_PORTS $DOCKER_ENVS --network host $SERVICE_IMAGE:$SERVICE_TAG &
 
     dapr run \
         --app-id $SERVICE_NAME \
@@ -62,8 +66,7 @@ run_service() {
         --config $VELOCITAS_WORKSPACE_DIR/.dapr/config.yaml &
 }
 
-DEPENDENCIES=$(cat $VELOCITAS_WORKSPACE_DIR/app/AppManifest.json | jq .[].dependencies)
-SERVICES=$(echo $DEPENDENCIES | jq '.services')
+SERVICES=$(cat $SCRIPT_DIR/config.json | jq .services)
 
 if [ "$SERVICES" = "null" ];then
     echo "No Services defined in AppManifest. Skip running vehicle services.";
@@ -75,7 +78,7 @@ else
         SERVICE_IMAGE=$(echo $service | jq '.image' | tr -d '"')
         SERVICE_TAG=$(echo $service | jq '.version' | tr -d '"')
         if [ $SERVICE_IMAGE = "null" ] || [ $SERVICE_TAG = "null" ];then
-            echo "Missing configuration in AppManifest.json for Service: $SERVICE_NAME"
+            echo "Missing configuration in config.json for Service: $SERVICE_NAME"
         else
             echo "Starting Service: $SERVICE_NAME"
             run_service $SERVICE_NAME

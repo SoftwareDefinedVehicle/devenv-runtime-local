@@ -17,28 +17,27 @@ echo "#######################################################"
 echo "### Running VehicleDataBroker CLI                   ###"
 echo "#######################################################"
 
-ROOT_DIRECTORY=$VELOCITAS_WORKSPACE_DIR
-
-# Get Data from AppManifest.json and save to ENV
-UTILS_DIRECTORY="$ROOT_DIRECTORY/.vscode/scripts/runtime/utils"
-source $UTILS_DIRECTORY/get-appmanifest-data.sh
-
 sudo chown $(whoami) $HOME
 
+SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+
+DATABROKER_TAG=$(cat $SCRIPT_DIR/config.json | jq .databroker.version | tr -d '"')
+
 # Needed because of how the databroker release is tagged
-DATABROKER_ASSET_FOLDER="$ROOT_DIRECTORY/.vscode/scripts/assets/databroker/$DATABROKER_TAG"
+DATABROKER_ASSET_FOLDER="$SCRIPT_DIR/../assets/databroker/$DATABROKER_TAG"
+
 #Detect host environment (distinguish for Mac M1 processor)
 if [[ `uname -m` == 'aarch64' || `uname -m` == 'arm64' ]]; then
     echo "Detected ARM architecture"
     PROCESSOR="aarch64"
     DATABROKER_BINARY_NAME="databroker_aarch64.tar.gz"
-    DATABROKER_EXEC_PATH="$DATABROKER_ASSET_FOLDER/$PROCESSOR/target/aarch64-unknown-linux-gnu/release"
 else
     echo "Detected x86_64 architecture"
     PROCESSOR="x86_64"
     DATABROKER_BINARY_NAME='databroker_x86_64.tar.gz'
-    DATABROKER_EXEC_PATH="$DATABROKER_ASSET_FOLDER/$PROCESSOR/target/release"
 fi
+
+DATABROKER_EXEC_PATH="$DATABROKER_ASSET_FOLDER/$PROCESSOR/target/release"
 
 if [[ ! -f "$DATABROKER_EXEC_PATH/databroker" ]]
 then

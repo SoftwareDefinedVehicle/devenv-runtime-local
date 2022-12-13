@@ -2,11 +2,11 @@
 
 echo "Bye, Runtime Local!"
 
-DEPENDENCIES=$(cat $VELOCITAS_WORKSPACE_DIR/app/AppManifest.json | jq .[].dependencies)
-SERVICES=$(echo $DEPENDENCIES | jq '.services')
+SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+SERVICES=$(cat $SCRIPT_DIR/config.json | jq .services)
 
 if [ "$SERVICES" = "null" ];then
-    echo "No Services defined in AppManifest. Skip stopping vehicle services.";
+    echo "No Services defined in config. Skip stopping vehicle services.";
 else
     readarray -t SERVICES_ARRAY < <(echo $SERVICES | jq -c '.[]')
     for service in ${SERVICES_ARRAY[@]}; do
