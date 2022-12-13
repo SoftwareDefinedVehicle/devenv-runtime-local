@@ -20,6 +20,7 @@ echo "#######################################################"
 # Function to initialize Dapr
 init_dapr()
 {
+      set -e
       echo "Initialize dapr runtime $DEFAULT_DAPR_RUNTIME_VERSION ..."
       dapr uninstall
       dapr init --runtime-version $DEFAULT_DAPR_RUNTIME_VERSION

@@ -10,7 +10,8 @@
                 },
                 {
                     "id": "run-mosquitto",
-                    "program": "./src/run-mosquitto.sh"
+                    "program": "./src/run-mosquitto.sh",
+                    "dependsOn": "ensure-dapr"
                 },
                 {
                     "id": "run-vehicledatabroker",
