@@ -11,12 +11,13 @@
                 {
                     "id": "run-mosquitto",
                     "program": "./src/run-mosquitto.sh",
-                    "dependsOn": "ensure-dapr"
+                    "dependsOn": "ensure-dapr",
+                    "startupLine": "mosquitto version 2.0.14 running"
                 },
                 {
                     "id": "run-vehicledatabroker",
                     "program": "./src/run-vehicledatabroker.sh",
-                    "dependsOn": "ensure-dapr",
+                    "dependsOn": "run-mosquitto",
                     "startupLine": "You're up and running! Dapr logs will appear here."
                 },
                 {
@@ -27,8 +28,7 @@
                 {
                     "id": "run-vehicleservices",
                     "program": "./src/run-vehicleservices.sh",
-                    "dependsOn": "ensure-dapr"
-
+                    "dependsOn": "run-vehicledatabroker"
                 }
             ],
             "stop": [
