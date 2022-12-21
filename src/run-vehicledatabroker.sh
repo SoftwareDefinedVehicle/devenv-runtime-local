@@ -21,11 +21,6 @@ DATABROKER_PORT='55555'
 export DATABROKER_GRPC_PORT='52001'
 #export RUST_LOG="info,databroker=debug,vehicle_data_broker=debug"
 
-SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
-
-DATABROKER_IMAGE=$(cat $SCRIPT_DIR/config.json | jq .databroker.image | tr -d '"')
-DATABROKER_TAG=$(cat $SCRIPT_DIR/config.json | jq .databroker.version | tr -d '"')
-
 RUNNING_CONTAINER=$(docker ps | grep "$DATABROKER_IMAGE" | awk '{ print $1 }')
 
 if [ -n "$RUNNING_CONTAINER" ];
@@ -33,11 +28,7 @@ then
     docker container stop $RUNNING_CONTAINER
 fi
 
-docker container rm local_vehicledatabroker 2>/dev/null
-
 docker run \
-    --rm \
-    --name local_vehicledatabroker \
     -p $DATABROKER_PORT:$DATABROKER_PORT \
     -p $DATABROKER_GRPC_PORT:$DATABROKER_GRPC_PORT \
     -e DATABROKER_GRPC_PORT \
@@ -49,5 +40,5 @@ dapr run \
     --app-protocol grpc \
     --app-port $DATABROKER_PORT \
     --dapr-grpc-port $DATABROKER_GRPC_PORT \
-    --components-path $SCRIPT_DIR/.dapr/components \
-    --config $SCRIPT_DIR/.dapr/config.yaml && fg
+    --components-path $VELOCITAS_WORKSPACE_DIR/.dapr/components \
+    --config $VELOCITAS_WORKSPACE_DIR/.dapr/config.yaml && fg

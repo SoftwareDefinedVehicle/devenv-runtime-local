@@ -17,13 +17,10 @@ echo "#######################################################"
 echo "### Running FeederCan                               ###"
 echo "#######################################################"
 
-### Override default files for feedercan
-CONFIG_DIR="$VELOCITAS_WORKSPACE_DIR/deploy/runtime/k3d/volume"
-
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 
 ### Override default files for feedercan
-CONFIG_DIR="$(dirname "$SCRIPT_DIR")/src/data"
+CONFIG_DIR="$SCRIPT_DIR/data"
 
 export VEHICLEDATABROKER_DAPR_APP_ID=vehicledatabroker
 export DAPR_GRPC_PORT=52001
@@ -41,11 +38,7 @@ then
     docker container stop $RUNNING_CONTAINER
 fi
 
-docker container rm local_feedercan 2>/dev/null
-
 docker run \
-    --rm \
-    --name local_feedercan \
     -v ${CONFIG_DIR}:/data \
     -e VEHICLEDATABROKER_DAPR_APP_ID \
     -e DAPR_GRPC_PORT \

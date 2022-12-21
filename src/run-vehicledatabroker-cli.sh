@@ -17,15 +17,10 @@ echo "#######################################################"
 echo "### Running VehicleDataBroker CLI                   ###"
 echo "#######################################################"
 
-sudo chown $(whoami) $HOME
-
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
-
-DATABROKER_TAG=$(cat $SCRIPT_DIR/config.json | jq .databroker.version | tr -d '"')
 
 # Needed because of how the databroker release is tagged
 DATABROKER_ASSET_FOLDER="$SCRIPT_DIR/../assets/databroker/$DATABROKER_TAG"
-
 #Detect host environment (distinguish for Mac M1 processor)
 if [[ `uname -m` == 'aarch64' || `uname -m` == 'arm64' ]]; then
     echo "Detected ARM architecture"

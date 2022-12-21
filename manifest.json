@@ -30,19 +30,6 @@
                     "program": "./src/run-vehicleservices.sh",
                     "dependsOn": "run-vehicledatabroker"
                 }
-            ],
-            "stop": [
-                {
-                    "id": "stop-all",
-                    "program": "./src/stop.sh"
-                }
-            ],
-            "variables": [
-                {
-                    "name": "myVar",
-                    "type": "string",
-                    "description": "some basic description"
-                }
             ]
         }
     ]
