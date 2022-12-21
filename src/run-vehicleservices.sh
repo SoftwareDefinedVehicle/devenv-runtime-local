@@ -62,8 +62,8 @@ run_service() {
         --app-protocol grpc \
         --app-port $DAPR_APP_PORT \
         --dapr-grpc-port $DAPR_GRPC_PORT \
-        --components-path $VELOCITAS_WORKSPACE_DIR/.dapr/components \
-        --config $VELOCITAS_WORKSPACE_DIR/.dapr/config.yaml &
+        --components-path $SCRIPT_DIR/.dapr/components \
+        --config $SCRIPT_DIR/.dapr/config.yaml &
 }
 
 SERVICES=$(cat $SCRIPT_DIR/config.json | jq .services)
