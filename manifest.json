@@ -1,7 +1,7 @@
 {
-    "alias": "local",
     "components": [
         {
+            "name": "local",
             "type": "runtime",
             "start": [
                 {
